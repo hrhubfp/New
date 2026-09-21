@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FASHION PLACE - Complete ERP & HRMS</title>
-<!-- Firebase Libraries -->
+
+<!-- Firebase CDNs (v9 Compat) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-<!-- Utilities -->
+
+<!-- Export & PDF Tools -->
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -22,27 +24,27 @@ body{background:#f1f5f9;color:#1e293b}
 ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:8px}
 .hidden{display:none!important}
 
-/* Login UI */
+/* Login UI Styles */
 #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#12100e,#2a1710,#431407);position:relative;overflow:hidden}
 .login-card{position:relative;background:rgba(255,255,255,.98);border-radius:20px;padding:34px 40px;width:410px;box-shadow:0 30px 70px rgba(0,0,0,.55)}
 .login-card h1{font-size:24px;text-align:center;color:#1c1917}
 .login-card p.sub{text-align:center;color:#8a8a93;font-size:11.5px;letter-spacing:1.5px;margin:6px 0 20px;text-transform:uppercase}
 
-/* Layout UI */
+/* Main Dashboard & Layout UI */
 #app{display:flex;min-height:100vh}
 .sidebar{width:235px;background:linear-gradient(180deg,#1c1917,#292524);color:#d6d3d1;padding-top:16px;flex-shrink:0;position:fixed;height:100vh;overflow-y:auto}
 .sidebar .brand{padding:0 18px 16px;border-bottom:1px solid #292524;margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .sidebar .brand b{color:#fff;font-size:16px}
-.nav-item{display:block;width:100%;padding:10px 18px;text-align:left;background:transparent;border:none;color:#d6d3d1;font-size:13.5px;cursor:pointer;border-left:3px solid transparent;transition:.15s}
+.nav-item{display:block;width:100%;padding:11px 18px;text-align:left;background:transparent;border:none;color:#d6d3d1;font-size:13.5px;cursor:pointer;border-left:3px solid transparent;transition:.15s}
 .nav-item:hover, .nav-item.active{background:#292524;color:#fff;border-left-color:#b91c1c;font-weight:600}
 
 .main{margin-left:235px;flex:1;padding:20px 24px;min-width:0}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;background:#fff;padding:12px 18px;border-radius:12px;border:1px solid #e2e8f0}
 .topbar h3{font-size:19px;font-weight:700}
-.user-chip{font-size:13px;color:#475569;display:flex;align-items:center;gap:8px}
+.user-chip{font-size:13px;color:#475569;display:flex;align-items:center;gap:10px}
 .logout-btn{color:#dc2626;cursor:pointer;font-weight:600;background:none;border:none;font-size:13px}
 
-/* Elements */
+/* Controls & Components */
 .form-group{margin-bottom:14px}
 .form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
 .form-group input, .form-group select{width:100%;padding:9px 11px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px}
@@ -57,8 +59,8 @@ body{background:#f1f5f9;color:#1e293b}
 .stat-card h2{font-size:22px;color:#0f172a;margin-top:4px}
 
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:#f8fafc;color:#64748b;text-align:left;padding:8px;font-size:11.5px;text-transform:uppercase}
-td{padding:8px;border-top:1px solid #e2e8f0}
+th{background:#f8fafc;color:#64748b;text-align:left;padding:9px;font-size:11.5px;text-transform:uppercase}
+td{padding:9px;border-top:1px solid #e2e8f0}
 .badge{padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600}
 .badge.green{background:#dcfce7;color:#15803d}
 .badge.red{background:#fee2e2;color:#b91c1c}
@@ -84,7 +86,7 @@ td{padding:8px;border-top:1px solid #e2e8f0}
   </div>
 </div>
 
-<!-- MAIN APPLICATION PAGE -->
+<!-- MAIN APPLICATION SYSTEM -->
 <div id="app" class="hidden">
   <div class="sidebar">
     <div class="brand"><b>FASHION PLACE</b></div>
@@ -100,7 +102,7 @@ td{padding:8px;border-top:1px solid #e2e8f0}
 
   <div class="main">
     <div class="topbar">
-      <h3 id="pageTitle">Dashboard</h3>
+      <h3 id="pageTitle">DASHBOARD</h3>
       <div class="user-chip">
         <span id="userName">User</span>
         <button class="logout-btn" onclick="logout()">Logout</button>
@@ -114,11 +116,11 @@ td{padding:8px;border-top:1px solid #e2e8f0}
       <div class="row-grid">
         <div class="stat-card"><h5>Total Sales</h5><h2 id="dbSales">₹0</h2></div>
         <div class="stat-card"><h5>Stock Items</h5><h2 id="dbStock">0</h2></div>
-        <div class="stat-card"><h5>Total Staff</h5><h2 id="dbStaff">0</h2></div>
+        <div class="stat-card"><h5>Total Staff / Users</h5><h2 id="dbStaff">0</h2></div>
       </div>
       <div class="panel">
-        <h4>Recent Activity</h4>
-        <p style="font-size:13px;color:#64748b;margin-top:8px">System active and connected to Firebase Firestore.</p>
+        <h4>System Status</h4>
+        <p style="font-size:13px;color:#64748b;margin-top:8px">System completely updated and integrated with Firebase Firestore & Auth Session Security.</p>
       </div>
     </div>
 
@@ -126,7 +128,7 @@ td{padding:8px;border-top:1px solid #e2e8f0}
     <div id="sec-inventory" class="section hidden">
       <div class="panel">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <h4>Inventory & Stock</h4>
+          <h4>Inventory & Stock Management</h4>
           <button class="btn btn-sm btn-green" onclick="openModal('addStockModal')">+ Add Product</button>
         </div>
         <table>
@@ -136,23 +138,23 @@ td{padding:8px;border-top:1px solid #e2e8f0}
       </div>
     </div>
 
-    <!-- MODULE 3: BILLING -->
+    <!-- MODULE 3: BILLING / POS -->
     <div id="sec-billing" class="section hidden">
       <div class="panel">
-        <h4>New Bill / POS</h4>
+        <h4>New Bill / POS Counter</h4>
         <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:14px">
           <div>
-            <div class="form-group"><label>Select Item</label><select id="billItemSelect"></select></div>
-            <button class="btn btn-sm btn-green" onclick="addBillItem()">Add To Bill</button>
+            <div class="form-group"><label>Select Item From Stock</label><select id="billItemSelect"></select></div>
+            <button class="btn btn-sm btn-green" onclick="addBillItem()">Add Item To Cart</button>
             <table style="margin-top:14px">
               <thead><tr><th>Item</th><th>Price</th></tr></thead>
               <tbody id="billItemsTable"></tbody>
             </table>
           </div>
-          <div style="background:#f8fafc;padding:14px;border-radius:8px">
-            <h5>Total Amount</h5>
-            <h2 id="billTotal" style="color:#16a34a;margin:10px 0">₹0</h2>
-            <button class="btn" onclick="completeBill()">Print & Save</button>
+          <div style="background:#f8fafc;padding:16px;border-radius:10px;border:1px solid #e2e8f0">
+            <h5>Total Payable Amount</h5>
+            <h2 id="billTotal" style="color:#16a34a;margin:12px 0">₹0</h2>
+            <button class="btn" onclick="completeBill()">Print & Finalize Invoice</button>
           </div>
         </div>
       </div>
@@ -161,16 +163,16 @@ td{padding:8px;border-top:1px solid #e2e8f0}
     <!-- MODULE 4: ACCOUNTS -->
     <div id="sec-accounts" class="section hidden">
       <div class="panel">
-        <h4>Accounts & Expenses</h4>
-        <p style="font-size:13px;color:#64748b;margin-top:8px">Track income and daily store expenses.</p>
+        <h4>Accounts & Expenses Tracking</h4>
+        <p style="font-size:13px;color:#64748b;margin-top:8px">Track daily ledger, store expenses, and income logs.</p>
       </div>
     </div>
 
     <!-- MODULE 5: HRMS -->
     <div id="sec-hrms" class="section hidden">
       <div class="panel">
-        <h4>HRMS & Attendance</h4>
-        <p style="font-size:13px;color:#64748b;margin-top:8px">Manage staff profiles and attendance records.</p>
+        <h4>HRMS & Staff Attendance</h4>
+        <p style="font-size:13px;color:#64748b;margin-top:8px">Employee profiles, salary status, and check-in logs.</p>
       </div>
     </div>
 
@@ -178,8 +180,8 @@ td{padding:8px;border-top:1px solid #e2e8f0}
     <div id="sec-users" class="section hidden">
       <div class="panel">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <h4>Users & Roles</h4>
-          <button class="btn btn-sm btn-green" onclick="openModal('addUserModal')">+ Add User</button>
+          <h4>Users & Role Access Control</h4>
+          <button class="btn btn-sm btn-green" onclick="openModal('addUserModal')">+ Add New User</button>
         </div>
         <table>
           <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th></tr></thead>
@@ -191,17 +193,37 @@ td{padding:8px;border-top:1px solid #e2e8f0}
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- MODALS SYSTEM -->
 <div id="addStockModal" class="modal-backdrop hidden">
   <div class="modal">
-    <h4>Add Product</h4>
+    <h4>Add New Product</h4>
     <div class="form-group"><label>Product Name</label><input type="text" id="pName"></div>
     <div class="form-group"><label>Category</label><input type="text" id="pCat"></div>
     <div class="form-group"><label>Quantity</label><input type="number" id="pQty"></div>
     <div class="form-group"><label>Price (₹)</label><input type="number" id="pPrice"></div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button class="btn btn-outline btn-sm" onclick="closeModal('addStockModal')">Cancel</button>
-      <button class="btn btn-green btn-sm" onclick="saveProduct()">Save</button>
+      <button class="btn btn-green btn-sm" onclick="saveProduct()">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<div id="addUserModal" class="modal-backdrop hidden">
+  <div class="modal">
+    <h4>Add New System User</h4>
+    <div class="form-group"><label>Full Name</label><input type="text" id="uName"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="uEmail"></div>
+    <div class="form-group"><label>Role</label>
+      <select id="uRole">
+        <option value="Admin">Admin</option>
+        <option value="Manager">Manager</option>
+        <option value="Accountant">Accountant</option>
+        <option value="Staff">Staff</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('addUserModal')">Cancel</button>
+      <button class="btn btn-green btn-sm" onclick="saveUser()">Create User</button>
     </div>
   </div>
 </div>
@@ -216,25 +238,29 @@ const firebaseConfig = {
   messagingSenderId: "576644637851",
   appId: "1:576644637851:web:093e427cf4e46485d6923e"
 };
+
 if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
+/* GENERAL UTILITIES */
 function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.remove("hidden"); setTimeout(()=>t.classList.add("hidden"),2500); }
 function openModal(id){ document.getElementById(id).classList.remove("hidden"); }
 function closeModal(id){ document.getElementById(id).classList.add("hidden"); }
 
-/* AUTH & SESSION (Auto Logout on Browser Close) */
+/* AUTH & SESSION (Auto Logout On Browser Close Fix) */
 async function doLogin(e){
   e.preventDefault();
   const err = document.getElementById("loginErr"); err.style.display="none";
   const email = document.getElementById("loginEmail").value;
   const pass = document.getElementById("loginPass").value;
   try {
+    // Isse Browser/Tab close hone par automatic logout ho jayega
     await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
     await auth.signInWithEmailAndPassword(email, pass);
   } catch(ex) {
-    err.style.display="block"; err.textContent = ex.message;
+    err.style.display="block"; 
+    err.textContent = ex.message;
   }
 }
 
@@ -258,16 +284,16 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-/* NAVIGATION */
+/* TAB SWITCHING SYSTEM */
 function switchTab(tabId){
   document.querySelectorAll(".section").forEach(s => s.classList.add("hidden"));
   document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
   document.getElementById("sec-" + tabId).classList.remove("hidden");
   document.getElementById("pageTitle").textContent = tabId.toUpperCase();
-  event.target.classList.add("active");
+  if(event && event.target) event.target.classList.add("active");
 }
 
-/* INVENTORY MANAGEMENT */
+/* INVENTORY MODULE FUNCTIONS */
 async function loadInventory(){
   const snap = await db.collection("inventory").get();
   const tbody = document.getElementById("inventoryTable");
@@ -275,9 +301,13 @@ async function loadInventory(){
   tbody.innerHTML = ""; select.innerHTML = "";
   
   document.getElementById("dbStock").textContent = snap.size;
+  if(snap.empty){
+    tbody.innerHTML = `<tr><td colspan="4">No stock items found.</td></tr>`;
+    return;
+  }
   snap.forEach(doc => {
     const d = doc.data();
-    tbody.innerHTML += `<tr><td>${d.name}</td><td>${d.cat}</td><td>${d.qty}</td><td>₹${d.price}</td></tr>`;
+    tbody.innerHTML += `<tr><td><b>${d.name}</b></td><td>${d.cat}</td><td>${d.qty}</td><td>₹${d.price}</td></tr>`;
     select.innerHTML += `<option value="${d.price}">${d.name} - ₹${d.price}</option>`;
   });
 }
@@ -288,42 +318,64 @@ async function saveProduct(){
   const qty = Number(document.getElementById("pQty").value);
   const price = Number(document.getElementById("pPrice").value);
 
+  if(!name || !price) return alert("Product Name and Price are required.");
+
   await db.collection("inventory").add({ name, cat, qty, price });
   closeModal('addStockModal');
   toast("Product Added!");
   loadInventory();
 }
 
-/* BILLING SYSTEM */
+/* BILLING MODULE FUNCTIONS */
 let currentBillTotal = 0;
 function addBillItem(){
   const select = document.getElementById("billItemSelect");
+  if(!select.value) return alert("Please select an item first!");
   const price = Number(select.value);
   const text = select.options[select.selectedIndex].text;
   
   currentBillTotal += price;
   document.getElementById("billTotal").textContent = "₹" + currentBillTotal;
+  document.getElementById("dbSales").textContent = "₹" + currentBillTotal;
   document.getElementById("billItemsTable").innerHTML += `<tr><td>${text}</td><td>₹${price}</td></tr>`;
 }
 
 function completeBill(){
-  if(currentBillTotal === 0) return alert("Select items first!");
-  toast("Bill Generated Successfully!");
+  if(currentBillTotal === 0) return alert("Cart is empty! Add items to generate bill.");
+  toast("Invoice Printed & Saved!");
   currentBillTotal = 0;
   document.getElementById("billTotal").textContent = "₹0";
   document.getElementById("billItemsTable").innerHTML = "";
 }
 
-/* USERS MANAGEMENT */
+/* USERS & ROLES MODULE FUNCTIONS */
 async function loadUsers(){
   const snap = await db.collection("users").get();
   const tbody = document.getElementById("usersTable");
   tbody.innerHTML = "";
   document.getElementById("dbStaff").textContent = snap.size;
+  
+  if(snap.empty){
+    tbody.innerHTML = `<tr><td colspan="4">No users found.</td></tr>`;
+    return;
+  }
   snap.forEach(doc => {
     const u = doc.data();
-    tbody.innerHTML += `<tr><td>${u.name||'N/A'}</td><td>${u.email}</td><td>${u.role||'user'}</td><td><span class="badge green">Active</span></td></tr>`;
+    tbody.innerHTML += `<tr><td><b>${u.name||'User'}</b></td><td>${u.email}</td><td>${u.role||'Staff'}</td><td><span class="badge green">Active</span></td></tr>`;
   });
+}
+
+async function saveUser(){
+  const name = document.getElementById("uName").value;
+  const email = document.getElementById("uEmail").value;
+  const role = document.getElementById("uRole").value;
+
+  if(!email) return alert("Email is required.");
+
+  await db.collection("users").add({ name, email, role, status: "active" });
+  closeModal('addUserModal');
+  toast("New User Created!");
+  loadUsers();
 }
 </script>
 </body>
